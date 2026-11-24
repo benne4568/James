@@ -5,12 +5,12 @@ import sys
 from pathlib import Path
 from types import SimpleNamespace
 
-sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "james_app"))
+sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "klausi_app"))
 
-from james.agent import Agent  # noqa: E402
-from james.config import Config, McpServer  # noqa: E402
-from james.mcp_hub import ToolRef  # noqa: E402
-from james.memory import Memory  # noqa: E402
+from klausi.agent import Agent  # noqa: E402
+from klausi.config import Config, McpServer  # noqa: E402
+from klausi.mcp_hub import ToolRef  # noqa: E402
+from klausi.memory import Memory  # noqa: E402
 
 
 def text(t):

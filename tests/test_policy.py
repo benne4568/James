@@ -1,9 +1,9 @@
 import sys
 from pathlib import Path
 
-sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "james_app"))
+sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "klausi_app"))
 
-from james.policy import Decision, Policy, is_affirmative  # noqa: E402
+from klausi.policy import Decision, Policy, is_affirmative  # noqa: E402
 
 P = Policy()
 

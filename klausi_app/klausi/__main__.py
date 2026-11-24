@@ -1,4 +1,4 @@
-"""Startpunkt: python -m james"""
+"""Startpunkt: python -m klausi"""
 
 from __future__ import annotations
 
@@ -26,7 +26,7 @@ async def main() -> None:
     runner = web.AppRunner(create_app(agent, cfg.api_token))
     await runner.setup()
     await web.TCPSite(runner, "0.0.0.0", cfg.port).start()
-    logging.getLogger("james").info(
+    logging.getLogger("klausi").info(
         "%s läuft auf Port %d mit %d Werkzeugen (Modell %s)",
         cfg.assistant_name, cfg.port, len(hub.tools), cfg.model,
     )

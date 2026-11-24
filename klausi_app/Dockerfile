@@ -4,6 +4,6 @@ ENV PYTHONUNBUFFERED=1 PIP_NO_CACHE_DIR=1
 WORKDIR /app
 COPY requirements.txt .
 RUN pip install -r requirements.txt
-COPY james ./james
+COPY klausi ./klausi
 
-CMD ["python", "-m", "james"]
+CMD ["python", "-m", "klausi"]

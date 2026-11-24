@@ -1,4 +1,4 @@
-"""Sicherheitsregeln: welche Werkzeugaufrufe James frei ausführen darf.
+"""Sicherheitsregeln: welche Werkzeugaufrufe Klausi frei ausführen darf.
 
 Drei Stufen:
 - ALLOW:   sofort ausführen (lesen, normale Geräte schalten, Aufgaben)
@@ -87,7 +87,7 @@ class Policy:
     def decide(self, tool: str, args: dict) -> tuple[Decision, str]:
         """Gibt Entscheidung und Begründung zurück. `tool` ist der ha-mcp-Name ohne Präfix."""
         if tool in self.deny_tools:
-            return Decision.DENY, "Dieses Werkzeug ist für James gesperrt."
+            return Decision.DENY, "Dieses Werkzeug ist für Klausi gesperrt."
 
         if tool.startswith(READ_ONLY_PREFIXES):
             return Decision.ALLOW, "nur lesen"

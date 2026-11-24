@@ -1,4 +1,4 @@
-"""Gesprächs-Agent, der jeden Satz an den James-Dienst weiterreicht."""
+"""Gesprächs-Agent, der jeden Satz an den Klausi-Dienst weiterreicht."""
 
 from __future__ import annotations
 
@@ -22,10 +22,10 @@ _LOGGER = logging.getLogger(__name__)
 async def async_setup_entry(
     hass: HomeAssistant, entry: ConfigEntry, async_add_entities: AddEntitiesCallback
 ) -> None:
-    async_add_entities([JamesConversationEntity(entry)])
+    async_add_entities([KlausiConversationEntity(entry)])
 
 
-class JamesConversationEntity(conversation.ConversationEntity):
+class KlausiConversationEntity(conversation.ConversationEntity):
     _attr_has_entity_name = True
     _attr_name = None
     _attr_supported_features = conversation.ConversationEntityFeature.CONTROL
@@ -33,8 +33,8 @@ class JamesConversationEntity(conversation.ConversationEntity):
     def __init__(self, entry: ConfigEntry) -> None:
         self._entry = entry
         self._attr_unique_id = entry.entry_id
-        self._attr_device_info = {"identifiers": {("james", entry.entry_id)}, "name": "James"}
-        # Gesprächs-IDs von Home Assistant auf die von James abbilden
+        self._attr_device_info = {"identifiers": {("klausi", entry.entry_id)}, "name": "Klausi"}
+        # Gesprächs-IDs von Home Assistant auf die von Klausi abbilden
         self._conversations: dict[str, str] = {}
 
     @property
@@ -65,8 +65,8 @@ class JamesConversationEntity(conversation.ConversationEntity):
             if data.get("conversation_id"):
                 self._conversations[chat_log.conversation_id] = data["conversation_id"]
         except (aiohttp.ClientError, TimeoutError) as err:
-            _LOGGER.error("James nicht erreichbar: %s", err)
-            speech = "Ich erreiche James gerade nicht."
+            _LOGGER.error("Klausi nicht erreichbar: %s", err)
+            speech = "Ich erreiche Klausi gerade nicht."
 
         chat_log.async_add_assistant_content_without_tools(
             conversation.AssistantContent(agent_id=user_input.agent_id, content=speech)

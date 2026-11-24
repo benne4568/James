@@ -53,12 +53,12 @@ class McpHub:
                         {
                             "name": full,
                             "description": desc[:4000],
-                            "input_schema": tool.inputSchema or {"type": "object", "properties": {}},
+                            "input_schema": getattr(tool, "input_schema", None) or {"type": "object", "properties": {}},
                         }
                     )
                     self._refs[full] = ToolRef(server=server.name, name=tool.name)
                 log.info("MCP-Server %s verbunden, %d Werkzeuge", server.name, len(listed.tools))
-            except Exception:  # noqa: BLE001 - ein ausgefallener Server soll James nicht stoppen
+            except Exception:  # noqa: BLE001 - ein ausgefallener Server soll Klausi nicht stoppen
                 log.exception("MCP-Server %s nicht erreichbar", server.name)
 
     async def close(self) -> None:
@@ -85,4 +85,4 @@ class McpHub:
         text = "\n".join(parts) or "(keine Ausgabe)"
         if len(text) > 60_000:
             text = text[:60_000] + "\n[... gekürzt, frage gezielter nach]"
-        return text, bool(getattr(result, "isError", False))
+        return text, bool(getattr(result, "is_error", False))

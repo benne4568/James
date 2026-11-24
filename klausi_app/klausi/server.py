@@ -1,4 +1,4 @@
-"""HTTP-Schnittstelle, über die Home Assistant (oder ein iPhone-Kurzbefehl) mit James spricht."""
+"""HTTP-Schnittstelle, über die Home Assistant (oder ein iPhone-Kurzbefehl) mit Klausi spricht."""
 
 from __future__ import annotations
 

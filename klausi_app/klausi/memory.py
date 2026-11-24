@@ -1,4 +1,4 @@
-"""Dauerhaftes Gedächtnis: kurze Notizen, die James sich merkt."""
+"""Dauerhaftes Gedächtnis: kurze Notizen, die Klausi sich merkt."""
 
 from __future__ import annotations
 

@@ -1,13 +1,13 @@
-# James auf einem eigenen Rechner (Docker).
+# Klausi auf einem eigenen Rechner (Docker).
 # Start:  cp .env.example .env  (ausfüllen)  &&  docker compose up -d --build
 services:
-  james:
-    build: ./james_app
-    container_name: james
+  klausi:
+    build: ./klausi_app
+    container_name: klausi
     restart: unless-stopped
     env_file: .env
     environment:
-      JAMES_DATA_DIR: /data
+      KLAUSI_DATA_DIR: /data
       TZ: Europe/Berlin
     volumes:
       - ./data:/data

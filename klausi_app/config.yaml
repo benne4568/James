@@ -1,8 +1,8 @@
-name: James
+name: Klausi
 version: "0.1.0"
-slug: james
+slug: klausi
 description: Claude als zentraler Hausassistent (steuert und konfiguriert Home Assistant)
-url: https://github.com/benne4568/james
+url: https://benne4568/James
 arch:
   - amd64
   - aarch64
@@ -16,7 +16,7 @@ options:
   api_token: ""
   model: claude-opus-5-5
   effort: low
-  assistant_name: James
+  assistant_name: Klausi
   owner_name: Benedikt
   web_search: true
   history_turns: 20
