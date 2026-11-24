@@ -27,6 +27,23 @@ Die Rückfrage wird im Code erzwungen, nicht nur im Prompt: Eine zurückgehalten
 
 ## Einrichtung
 
+James kann auf zwei Arten laufen. **Empfohlen ist ein eigener Rechner**, damit Home Assistant unberührt bleibt und James unabhängig neu gestartet oder erweitert werden kann.
+
+### Variante A: eigener Rechner mit Docker (empfohlen)
+
+Geeignet ist jeder kleine Rechner, der dauerhaft läuft: ein Mini-PC mit Intel N100 oder N95 (8 GB RAM reichen), ein Raspberry Pi 5 oder ein NAS mit Docker. Eine Grafikkarte braucht es nicht, das Denken passiert bei Claude.
+
+1. Debian oder Ubuntu Server installieren, dann Docker: `curl -fsSL https://get.docker.com | sh`
+2. Repository holen: `git clone https://github.com/benne4568/James.git && cd James`
+3. `cp .env.example .env` und ausfüllen (API-Schlüssel, `JAMES_API_TOKEN`, Adresse des ha-mcp-Servers).
+4. Starten: `docker compose up -d --build`, Log ansehen mit `docker compose logs -f`.
+5. Damit James den ha-mcp-Server im Heimnetz erreicht, in der App „Home Assistant MCP Server“ den Port freigeben (Reiter „Netzwerk“).
+6. Weiter mit Schritt 2 unten, als Adresse `http://<IP-des-James-Rechners>:8099` eintragen. Dem Rechner im Router eine feste IP geben.
+
+Gedächtnis und Protokoll liegen in `./data`.
+
+### Variante B: als App auf dem Home-Assistant-Server
+
 ### 1. App installieren
 
 1. Den Ordner `james_app` per Samba in den Ordner `addons` des Home-Assistant-Servers kopieren (also `addons/james_app/…`).
