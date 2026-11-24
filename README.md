@@ -42,6 +42,12 @@ Geeignet ist jeder kleine Rechner, der dauerhaft läuft: ein Mini-PC mit Intel N
 
 Gedächtnis und Protokoll liegen in `./data`.
 
+**Alter Laptop als James-Rechner** (z. B. HP EliteBook 840 G1): reicht völlig aus, 4 GB RAM genügen.
+- Debian 13 ohne Desktop installieren (bei der Installation nur „SSH-Server“ und „Standard-Systemwerkzeuge“ anhaken), per LAN-Kabel anschließen.
+- Damit er bei geschlossenem Deckel weiterläuft: in `/etc/systemd/logind.conf` `HandleLidSwitch=ignore` und `HandleLidSwitchExternalPower=ignore` setzen, dann `sudo systemctl restart systemd-logind`.
+- Im BIOS (F10 beim Start) „After Power Loss: Power On“ einstellen, damit er nach einem Stromausfall selbst startet.
+- Der Akku dient als kleine Notstromversorgung. Ist er alt oder aufgebläht, lieber ausbauen.
+
 ### Variante B: als App auf dem Home-Assistant-Server
 
 ### 1. App installieren
