@@ -1,0 +1,11 @@
+{
+  "domain": "james",
+  "name": "James",
+  "codeowners": ["@benne4568"],
+  "config_flow": true,
+  "dependencies": ["conversation"],
+  "documentation": "https://github.com/benne4568/james",
+  "iot_class": "local_polling",
+  "requirements": [],
+  "version": "0.1.0"
+}

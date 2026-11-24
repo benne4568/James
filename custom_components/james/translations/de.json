@@ -1,0 +1,12 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "title": "James verbinden",
+        "data": {"url": "Adresse des James-Dienstes", "token": "Zugangsschlüssel (api_token)"}
+      }
+    },
+    "error": {"cannot_connect": "James ist unter dieser Adresse nicht erreichbar."},
+    "abort": {"already_configured": "James ist bereits eingerichtet."}
+  }
+}
