@@ -1,2 +1,0 @@
-anthropic[mcp]>=2.13,<3
-aiohttp>=3.9,<4

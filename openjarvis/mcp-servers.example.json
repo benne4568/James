@@ -1,0 +1,7 @@
+[
+  {
+    "name": "klausi",
+    "url": "http://127.0.0.1:8100/mcp",
+    "token": "<KLAUSI_TOKEN aus /etc/klausi/guard.env>"
+  }
+]

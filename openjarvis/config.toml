@@ -1,0 +1,32 @@
+# OpenJarvis-Konfiguration für Klausi.
+# Kopieren nach ~/.openjarvis/config.toml (siehe README, Schritt 3).
+# Schlüssel stehen NICHT hier, sondern in ~/.openjarvis/klausi.env.
+
+[engine]
+default = "cloud"            # Claude über die Anthropic-API, kein lokales Modell
+
+[intelligence]
+provider = "anthropic"
+default_model = "claude-sonnet-5-5"   # schnell für Sprache; claude-opus-5-5 ist gründlicher
+max_tokens = 1024
+temperature = 0.5
+
+[agent]
+default_agent = "orchestrator"
+max_turns = 10
+system_prompt_path = "/home/klausi/.openjarvis/klausi-prompt.md"
+context_from_memory = false
+
+[system_prompt]
+include_current_time = true
+timezone = "Europe/Berlin"
+
+[tools.mcp]
+enabled = true
+# Nur der Klausi-Wächter, nie ha-mcp direkt: sonst gelten die Sicherheitsregeln nicht.
+servers = "mcp-servers.json"   # liegt neben dieser Datei
+
+[server]
+host = "0.0.0.0"             # Home Assistant muss OpenJarvis im Heimnetz erreichen
+port = 8000
+agent = "orchestrator"

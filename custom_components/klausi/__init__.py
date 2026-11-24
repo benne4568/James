@@ -1,4 +1,4 @@
-"""James: trägt den eigenen Claude-Agenten als Gesprächs-Agent in Home Assistant ein."""
+"""Klausi: trägt OpenJarvis (mit Claude) als Gesprächs-Agent in Home Assistant ein."""
 
 from __future__ import annotations
 
