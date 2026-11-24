@@ -25,50 +25,41 @@ Home Assistant Assist  ──Text──▶  Klausi (diese App)  ──▶  Claud
 
 Die Rückfrage wird im Code erzwungen, nicht nur im Prompt: Eine zurückgehaltene Aktion läuft erst, wenn im **nächsten** Satz eine klare Zustimmung kommt („Ja“, „Mach“, „Okay“ …). Jede Aktion steht in `/data/audit.log`. Die Regeln stehen in `klausi_app/klausi/policy.py`.
 
-## Einrichtung
+## Einrichtung als Home-Assistant-App
 
-Klausi kann auf zwei Arten laufen. **Empfohlen ist ein eigener Rechner**, damit Home Assistant unberührt bleibt und Klausi unabhängig neu gestartet oder erweitert werden kann.
-
-### Variante A: eigener Rechner mit Docker (empfohlen)
-
-Geeignet ist jeder kleine Rechner, der dauerhaft läuft: ein Mini-PC mit Intel N100 oder N95 (8 GB RAM reichen), ein Raspberry Pi 5 oder ein NAS mit Docker. Eine Grafikkarte braucht es nicht, das Denken passiert bei Claude.
-
-1. Debian oder Ubuntu Server installieren, dann Docker: `curl -fsSL https://get.docker.com | sh`
-2. Repository holen: `git clone https://github.com/benne4568/James.git klausi && cd klausi`
-3. `cp .env.example .env` und ausfüllen (API-Schlüssel, `KLAUSI_API_TOKEN`, Adresse des ha-mcp-Servers).
-4. Starten: `docker compose up -d --build`, Log ansehen mit `docker compose logs -f`.
-5. Damit Klausi den ha-mcp-Server im Heimnetz erreicht, in der App „Home Assistant MCP Server“ den Port freigeben (Reiter „Netzwerk“).
-6. Weiter mit Schritt 2 unten, als Adresse `http://<IP-des-Klausi-Rechners>:8099` eintragen. Dem Rechner im Router eine feste IP geben.
-
-Gedächtnis und Protokoll liegen in `./data`.
-
-**Alter Laptop als Klausi-Rechner** (z. B. HP EliteBook 840 G1): reicht völlig aus, 4 GB RAM genügen.
-- Debian 13 ohne Desktop installieren (bei der Installation nur „SSH-Server“ und „Standard-Systemwerkzeuge“ anhaken), per LAN-Kabel anschließen.
-- Damit er bei geschlossenem Deckel weiterläuft: in `/etc/systemd/logind.conf` `HandleLidSwitch=ignore` und `HandleLidSwitchExternalPower=ignore` setzen, dann `sudo systemctl restart systemd-logind`.
-- Im BIOS (F10 beim Start) „After Power Loss: Power On“ einstellen, damit er nach einem Stromausfall selbst startet.
-- Der Akku dient als kleine Notstromversorgung. Ist er alt oder aufgebläht, lieber ausbauen.
-
-### Variante B: als App auf dem Home-Assistant-Server
+Klausi läuft als App direkt auf dem Home-Assistant-Server. Er braucht kaum Leistung, weil das Denken bei Claude passiert.
 
 ### 1. App installieren
 
-1. Den Ordner `klausi_app` per Samba in den Ordner `addons` des Home-Assistant-Servers kopieren (also `addons/klausi_app/…`).
-2. In Home Assistant: Einstellungen → Apps → App-Store → oben rechts ⋮ → „Nach Updates suchen“. Unter „Lokale Apps“ erscheint **Klausi**.
-3. Installieren, dann im Reiter „Konfiguration“ ausfüllen:
+1. Einstellungen → Apps → App-Store → oben rechts ⋮ → **Repositories** → `https://github.com/benne4568/James` hinzufügen.
+2. Die Seite neu laden. Unter „Klausi“ erscheint die App **Klausi**. Installieren (das Bauen dauert ein paar Minuten).
+3. Im Reiter „Konfiguration“ ausfüllen:
    - `anthropic_api_key`: ein **eigener** Schlüssel für Klausi aus der Anthropic Console (am besten mit Ausgabenlimit).
    - `api_token`: ein langes, selbst ausgedachtes Passwort.
-   - `mcp_servers`: für die Bat Cave die Adresse des ha-mcp-Servers. Die steht im Log der App „Home Assistant MCP Server“. Für Opas Haus die Adresse über den Nabu-Casa-Webhook-Proxy, Kurzname `opa`.
+   - `mcp_servers`: für die Bat Cave die Adresse des ha-mcp-Servers. Der geheime Pfad steht im Log der App „Home Assistant MCP Server“. Innerhalb von Home Assistant lautet die Adresse `http://81f33d0f-ha-mcp:9583/<geheimer-pfad>` (den Hostnamen zeigt die Info-Seite der ha-mcp-App). Für Opas Haus die Adresse über den Nabu-Casa-Webhook-Proxy, Kurzname `opa`.
 4. Starten und im Log prüfen: `Klausi läuft auf Port 8099 mit … Werkzeugen`.
+
+Updates kommen künftig wie bei jeder anderen App über den App-Store.
 
 ### 2. Klausi als Gesprächs-Agent eintragen
 
-1. Den Ordner `custom_components/klausi` nach `config/custom_components/klausi` kopieren und Home Assistant neu starten.
-2. Einstellungen → Geräte & Dienste → Integration hinzufügen → **Klausi**. Adresse `http://local-klausi:8099`, Zugangsschlüssel = `api_token`.
-3. Einstellungen → Sprachassistenten → neue Pipeline „Klausi“: Gesprächs-Agent **Klausi**, Spracherkennung und Stimme von Home Assistant Cloud. Als bevorzugt festlegen.
+1. Die Integration installieren, entweder über HACS (⋮ → Benutzerdefinierte Repositories → `https://github.com/benne4568/James`, Typ „Integration“) oder per Samba den Ordner `custom_components/klausi` nach `config/custom_components/klausi` kopieren. Danach Home Assistant neu starten.
+2. Einstellungen → Geräte & Dienste → Integration hinzufügen → **Klausi**. Adresse `http://d3f5cc74-klausi:8099` (der Hostname steht auf der Info-Seite der Klausi-App), Zugangsschlüssel = `api_token`.
+3. Einstellungen → Sprachassistenten → Pipeline „Assistent“: Gesprächs-Agent **Klausi**.
 
 ### 3. Testen
 
 In der HA-App Assist öffnen und fragen: „Wie warm ist es im Schlafzimmer?“ oder „Leg eine Automation an, die um 22 Uhr alle Rollos schließt.“ Bei der zweiten fragt Klausi vorher nach.
+
+### Alternative: eigener Rechner mit Docker
+
+Soll Klausi später doch getrennt von Home Assistant laufen (z. B. auf einem alten Laptop mit Debian):
+
+1. Docker installieren: `curl -fsSL https://get.docker.com | sh`
+2. `git clone https://github.com/benne4568/James.git klausi && cd klausi`
+3. `cp .env.example .env` und ausfüllen.
+4. `docker compose up -d --build`
+5. In der ha-mcp-App den Port freigeben (Reiter „Netzwerk“) und in der Integration `http://<IP-des-Rechners>:8099` eintragen.
 
 ## Einstellungen
 
@@ -98,7 +89,7 @@ curl -H "Authorization: Bearer geheim" -d '{"text":"Wie warm ist es im Büro?"}'
 
 ## OpenJarvis zum Ausprobieren
 
-[OpenJarvis](https://github.com/open-jarvis/OpenJarvis) kann auf demselben Laptop daneben laufen, es stört Klausi nicht. Wichtig: Bindet man dort ha-mcp direkt an, gelten Klausis Sicherheitsregeln nicht. Für Versuche also besser nur lesende Werkzeuge freigeben (`include_tools`).
+[OpenJarvis](https://github.com/open-jarvis/OpenJarvis) kann zum Ausprobieren auf einem anderen Rechner laufen. Wichtig: Bindet man dort ha-mcp direkt an, gelten Klausis Sicherheitsregeln nicht. Für Versuche also besser nur lesende Werkzeuge freigeben (`include_tools`).
 
 ## Geplant
 

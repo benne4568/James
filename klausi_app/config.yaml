@@ -1,8 +1,8 @@
 name: Klausi
-version: "0.1.0"
+version: "0.1.1"
 slug: klausi
 description: Claude als zentraler Hausassistent (steuert und konfiguriert Home Assistant)
-url: https://benne4568/James
+url: https://github.com/benne4568/James
 arch:
   - amd64
   - aarch64
